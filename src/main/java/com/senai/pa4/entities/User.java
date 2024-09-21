@@ -21,7 +21,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String username;
     private String position;
-    private String type;
+    private String roleType;
+    private String password;  // INSERIDO NO PA4
 }

@@ -4,8 +4,8 @@ import com.senai.pa4.exceptions.ParametrosException;
 
 public enum TypeEnum {
 
-    ADMINISTRADOR("Administrador"),
-    OPERADOR("Operador");
+    ADMINISTRADOR("admin"),  //Administrador
+    OPERADOR("user"); // Operador
 
     private String tipo;
 

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @SpringBootApplication
-public class ProjetoAplicadoIiiApplication {
+public class ProjetoAplicadoIVApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProjetoAplicadoIiiApplication.class, args);
+		SpringApplication.run(ProjetoAplicadoIVApplication.class, args);
 	}
 
 }

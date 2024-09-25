@@ -46,6 +46,18 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
+    // INSERIDO NO PA4
+
+//    @GetMapping(value = "/{name}")
+////    public ResponseEntity<UserDTO> findByName(@PathVariable String name) {
+////        LOGGER.info("Iniciado a busca do usuario por ID");
+////        var response = userService.findByName(name);
+////        LOGGER.info("Finalizado a busca do usuario por ID");
+////        return ResponseEntity.ok().body(response);
+////    }
+
+    // ATÉ AQUI
+
     @PostMapping
     public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO userDTO) {
         LOGGER.info("Iniciado a inserção de um novo usuario");

@@ -6,10 +6,12 @@ import com.senai.pa4.enums.TypeEnum;
 import com.senai.pa4.exceptions.ResourceNotFoundException;
 import com.senai.pa4.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +35,17 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Id " + id + " não encontrado"));
         return new UserDTO(user);
     }
+
+    // INSERIDO NO PA4
+
+//    @Transactional(readOnly = true)
+//    public UserDTO findByName(String name) {
+//        User user = userRepository.findByName(name)
+//                .orElseThrow(() -> new ResourceNotFoundException("Username " + name + " não encontrado"));
+//        return new UserDTO(user);
+//    }
+
+    // ATÉ AQUI
 
     @Transactional
     public UserDTO insert(UserDTO userDTO) {
@@ -63,8 +76,15 @@ public class UserService {
     }
 
     private void copyDtoToEntity(UserDTO userDTO, User user) {
-        user.setName(userDTO.getName());
+        user.setUsername(userDTO.getUsername());
         user.setPosition(userDTO.getPosition());
-        user.setType(TypeEnum.parse(userDTO.getType()));
+        user.setRoleType(TypeEnum.parse(userDTO.getRoleType()));
+        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
     }
+
+    public Optional<User> getUserByUsername(String username) {
+        Optional<User> users = userRepository.findByUsername(username);
+        return users;
+    }
+
 }

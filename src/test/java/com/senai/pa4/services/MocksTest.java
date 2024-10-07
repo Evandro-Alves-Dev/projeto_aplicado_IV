@@ -1,5 +1,6 @@
 package com.senai.pa4.services;
 
+import com.senai.pa4.dto.UserDTO;
 import com.senai.pa4.entities.User;
 
 import java.util.List;
@@ -26,5 +27,15 @@ public class MocksTest {
 
     public List<User> mockUsersEmpty() {
         return List.of();
+    }
+
+    public UserDTO mockUserDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(1L);
+        userDTO.setUsername("MacGyver");
+        userDTO.setPassword("123456");
+        userDTO.setPosition("Gerente");
+        userDTO.setRoleType("admin");
+        return userDTO;
     }
 }

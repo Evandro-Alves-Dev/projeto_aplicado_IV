@@ -1,25 +1,25 @@
-version: '3.1'
-
 services:
   projeto_aplicado:
-    container_name: Banco-de-dados
+    container_name: novo_bd
     image: postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-
     networks:
       - postgres-compose-network
 
   db-admin:
-    container_name: Gerenciador-de-banco-de-dados
     image: dpage/pgadmin4
+    container_name: GSBD
     ports:
-      - 15432:80
+      - "15432:80"  # Alterado para a porta padrão do pgAdmin
     environment:
       PGADMIN_DEFAULT_EMAIL: 'root@root.com'
       PGADMIN_DEFAULT_PASSWORD: 'root'
+      PGADMIN_CONFIG_SERVER_MODE: 'False'  # Modo servidor desativado
     depends_on:
       - projeto_aplicado
     networks:

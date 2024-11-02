@@ -6,7 +6,7 @@ import com.senai.pa4.enums.TypeEnum;
 import com.senai.pa4.exceptions.ResourceNotFoundException;
 import com.senai.pa4.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,7 +79,7 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setPosition(userDTO.getPosition());
         user.setRoleType(TypeEnum.parse(userDTO.getRoleType()));
-        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        user.setPassword((userDTO.getPassword())); //user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
     }
 
     public Optional<User> getUserByUsername(String username) {

@@ -3,6 +3,7 @@ package com.senai.pa4.resource;
 import com.senai.pa4.dto.ProductionDTO;
 import com.senai.pa4.services.ProductionService;
 import jakarta.validation.Valid;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/production", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_PDF_VALUE})
+@RequestMapping(value = "/production")
 public class ProductionController {
 
     private static final Logger LOGGER = Logger.getLogger(ProductionController.class.getName());
@@ -40,13 +41,13 @@ public class ProductionController {
         return ResponseEntity.ok().body(response);
     }
 
-//    @GetMapping(produces = MediaType.APPLICATION_PDF_VALUE)
-//    public ResponseEntity<InputStreamResource> findAll2() {
-//        LOGGER.info("Iniciado a busca de todos os apontamentos de produção");
-//        var response = productionService.findAll2();
-//        LOGGER.info("Finalizado a busca de todos os apontamentos de produção");
-//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(response));
-//    }
+    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> findAll2() {
+        LOGGER.info("Iniciado a busca de todos os apontamentos de produção");
+        var response = productionService.findAll2();
+        LOGGER.info("Finalizado a busca de todos os apontamentos de produção");
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(response));
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductionDTO> findById(@PathVariable Long id) {
@@ -57,7 +58,7 @@ public class ProductionController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductionDTO> insert(@Valid @RequestBody ProductionDTO productionDTO) {
+    public ResponseEntity<ProductionDTO> insert(@RequestBody ProductionDTO productionDTO) {
         LOGGER.info("Iniciado a inserção de um novo apontamento de produção");
         var response = productionService.insert(productionDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(response.getIdProduction()).toUri();

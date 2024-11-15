@@ -15,16 +15,16 @@ public class UserDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Campo obrigatório")
+//    @NotBlank(message = "Campo obrigatório")
     private String username;
 
-    @NotBlank(message = "Campo obrigatório")
+//    @NotBlank(message = "Campo obrigatório")
     private String position;
 
-    @NotBlank(message = "Campo obrigatório")
+//    @NotBlank(message = "Campo obrigatório")
     private String roleType;
 
-    @NotBlank(message = "Campo obrigatório")
+//    @NotBlank(message = "Campo obrigatório")
     private String password;
 
     public UserDTO(User entity) {

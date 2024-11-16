@@ -1,6 +1,10 @@
 
 package com.senai.pa4.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.senai.pa4.config.CustomLocalDateDeserializer;
+import com.senai.pa4.config.CustomLocalDateTimeDeserializer;
 import com.senai.pa4.entities.Production;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,15 +23,25 @@ public class ProductionDTO implements Serializable {
     private Double planQuantity;
     private Double realQuantity;
     private String unit;
-    private String startTime;
-    private String finishTime;
-    private LocalDateTime startDowntime;
-    private LocalDateTime finishDowntime;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime startTime;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime finishTime;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime startDowntime = null;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime finishDowntime = null;
     private String packageType;
     private String labelType;
     private String equipment;
     private String workShift;// turno de produção
     private String productionBatch;// lote de produção
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate bestBefore;
     private String notes;// observações
 

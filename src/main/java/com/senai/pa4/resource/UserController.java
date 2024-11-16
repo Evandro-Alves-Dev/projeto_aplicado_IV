@@ -61,7 +61,7 @@ public class UserController {
     // ATÉ AQUI
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
         LOGGER.info("Iniciado a inserção de um novo usuario");
         var response = userService.insert(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(response.getId()).toUri();

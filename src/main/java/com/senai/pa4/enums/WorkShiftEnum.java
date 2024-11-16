@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 
 public enum WorkShiftEnum {
 
-    PRIMERO_TURNO("Primeiro Turno"),
-    SEGUNDO_TURNO("Segundo Turno"),
-    TERCEIRO_TURNO("Terceiro Turno");
+    PRIMERO_TURNO("T1"),
+    SEGUNDO_TURNO("T2"),
+    TERCEIRO_TURNO("T3");
 
     private String workShift;
 

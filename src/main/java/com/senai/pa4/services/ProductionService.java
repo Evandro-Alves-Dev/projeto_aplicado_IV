@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,51 +55,110 @@ public class ProductionService {
             paragraph.setSpacingBefore(10);
             document.add(paragraph);
 
-            PdfPTable table = new PdfPTable(3);
+            PdfPTable table = new PdfPTable(16);
             table.setWidthPercentage(100);
-            table.setWidths(new int[]{1, 1, 1});
+            table.setWidths(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
 
             Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
-            PdfPCell hcell;
-            hcell = new PdfPCell(new Phrase("Id", headFont));
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(hcell);
+            String[] headers = {"Id", "Quantidade Planejada", "Quantidade Real", "Unidade", "Hora de Início", "Hora de Término", "Início da Parada", "Fim da Parada", "Tempo Total da Parada", "Tipo de Embalagem", "Tipo de Rótulo", "Equipamento", "Turno de Trabalho", "Lote de Produção", "Data de Validade", "Observações"};
 
-            hcell = new PdfPCell(new Phrase("Quantidade Planejada", headFont));
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(hcell);
-
-            hcell = new PdfPCell(new Phrase("Quantidade Real", headFont));
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(hcell);
+            for (String header : headers) {
+                PdfPCell hcell = new PdfPCell(new Phrase(header, headFont));
+                hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(hcell);
+            }
 
             List<Production> productions = productionRepository.findAll();
 
-            for (Production production : productions) {
-
+            productions.stream()
+                    .sorted(Comparator.comparing(Production::getIdProduction))
+                    .forEach(production -> {
+                ProductionDTO productionDTO = new ProductionDTO(production);
                 PdfPCell cell;
 
-                cell = new PdfPCell(new Phrase(production.getIdProduction().toString()));
+                cell = new PdfPCell(new Phrase(productionDTO.getIdProduction().toString()));
                 cell.setVerticalAlignment(Element.ALIGN_CENTER);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(production.getPlanQuantity().toString()));
+                cell = new PdfPCell(new Phrase(productionDTO.getPlanQuantity().toString()));
                 cell.setVerticalAlignment(Element.ALIGN_CENTER);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setPaddingLeft(Element.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(production.getRealQuantity().toString()));
+                cell = new PdfPCell(new Phrase(productionDTO.getRealQuantity().toString()));
                 cell.setVerticalAlignment(Element.ALIGN_CENTER);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setPaddingRight(Element.ALIGN_CENTER);
                 table.addCell(cell);
-            }
+
+                cell = new PdfPCell(new Phrase(productionDTO.getUnit()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getStartTime().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getFinishTime().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getStartDowntime() == null ? "" : productionDTO.getStartDowntime().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getFinishDowntime() == null ? "" : productionDTO.getFinishDowntime().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(production.getDowntime() == null ? "" : production.getDowntime().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getPackageType()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getLabelType()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getEquipment()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getWorkShift()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getProductionBatch()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getBestBefore().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(productionDTO.getNotes() == null ? "" : productionDTO.getNotes()));
+                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+            });
 
             document.add(table);
-
             document.close();
 
         } catch (DocumentException ex) {
@@ -111,7 +171,10 @@ public class ProductionService {
     @Transactional(readOnly = true)
     public List<ProductionDTO> findAll() {
         List<Production> productions = productionRepository.findAll();
-        return productions.stream().map(ProductionDTO::new).collect(Collectors.toList());
+        return productions.stream()
+                .sorted(Comparator.comparing(Production::getIdProduction))
+                .map(ProductionDTO::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -158,7 +221,7 @@ public class ProductionService {
         production.setStartDowntime(productionDTO.getStartDowntime());
         production.setFinishDowntime(productionDTO.getFinishDowntime());
         // Tempo de parada definido automaticamente
-        production.setDowntime(buildDowntime(productionDTO.getStartDowntime(), productionDTO.getFinishDowntime(), null,"INSERT"));
+        production.setDowntime(buildDowntime(productionDTO.getStartDowntime(), productionDTO.getFinishDowntime(), null, "INSERT"));
         production.setPackageType(productionDTO.getPackageType());
         production.setLabelType(productionDTO.getLabelType());
         production.setEquipment(productionDTO.getEquipment());
@@ -203,16 +266,16 @@ public class ProductionService {
         return batch;
     }
 
-    private String buildFormartDate(String startTime) {
-        if (startTime == null || startTime.toString().isBlank()) {
-            return LocalDateTime.now().toString();
+    private LocalDateTime buildFormartDate(LocalDateTime startTime) {
+        if (startTime == null) {
+            return LocalDateTime.now();
         } else {
             return startTime;
         }
     }
 
-    private String buildFormartDateFinish(String finishTime, Optional<Production> entity) {
-        if (finishTime == null || finishTime.isBlank()) {
+    private LocalDateTime buildFormartDateFinish(LocalDateTime finishTime, Optional<Production> entity) {
+        if (finishTime == null || finishTime.toString().isBlank()) {
             return entity.get().getFinishTime();
         } else {
             return finishTime;
@@ -228,7 +291,7 @@ public class ProductionService {
             if (method.equals("INSERT")) {
                 return null;
             } else if (method.equals("UPDATE")) {
-              return entity.get().getDowntime();
+                return entity.get().getDowntime();
             }
 
         }

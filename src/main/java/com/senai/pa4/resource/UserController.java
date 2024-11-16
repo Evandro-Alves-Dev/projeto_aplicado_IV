@@ -5,6 +5,7 @@ import com.senai.pa4.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", exposedHeaders = "*")
 @RestController
-@RequestMapping(value = "/user", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+@RequestMapping(value = "/user")
 public class UserController {
 
     private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
@@ -59,7 +61,7 @@ public class UserController {
     // ATÉ AQUI
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
         LOGGER.info("Iniciado a inserção de um novo usuario");
         var response = userService.insert(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(response.getId()).toUri();

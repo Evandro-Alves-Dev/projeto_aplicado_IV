@@ -1,12 +1,13 @@
-# Projeto Aplicado III
+# Projeto Aplicado IV
 
 ## Descrição do Projeto
 
-Projeto desenvolvido para a disciplina de Projeto Aplicado III, do curso de Analise e Desenvolvimento de Sistemas do UniSENAI.
+Projeto desenvolvido para a disciplina de Projeto Aplicado IV, do curso de Analise e Desenvolvimento de Sistemas do UniSENAI.
 A aplicação consiste em um sistema de apontamento de relatórios d eprodução e gerenciamento do mesmo para uma fabrica de lactnicos.
 
 
 ## Integrantes
+
  - Evandro Alves
  - Gilson Langa
  - Vitória

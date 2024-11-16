@@ -1,5 +1,3 @@
-//// CLASSE CRIADA NO PA4 PARA O SPRINGSECURITY
-//
 //package com.senai.pa4.config;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -23,30 +21,29 @@
 //    @Bean
 //    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
-//                .cors(cors -> cors.disable())
-//                .csrf(csrf -> csrf.ignoringRequestMatchers("**"))
+//                .cors(cors -> cors.disable())  // Desabilita CORS se não for necessário
+//                .csrf(csrf -> csrf
+//                        .ignoringRequestMatchers("/login", "/public/**"))  // Ignora CSRF para login e endpoints públicos
 //                .authorizeHttpRequests((requests) -> requests
-//                .requestMatchers("/public/**").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "user").permitAll()  // excluir .permitAll() e usar .hasRole("USER") por exemplo
-//                .anyRequest().authenticated()
-//            )
-//                .sessionManagement(session -> session.maximumSessions(1)
-//                        .expiredUrl("/login?expired")
-//                        .maxSessionsPreventsLogin(true)
+//                        .requestMatchers("/login").permitAll()  // Permite acesso ao endpoint de login sem autenticação
+//                        .requestMatchers(HttpMethod.POST, "/public/**").permitAll()  // Permite POST para endpoints públicos
+//                        .anyRequest().authenticated()  // Exige autenticação para todas as outras requisições
 //                )
-//                .userDetailsService(userDetailsServiceCustom)
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin((form) -> form.permitAll())
-//                .logout((logout) -> logout.permitAll());
+//                .sessionManagement(session -> session
+//                        .maximumSessions(1)  // Permite uma sessão por vez
+//                        .expiredUrl("/login?expired")  // URL quando a sessão expirar
+//                        .maxSessionsPreventsLogin(true)  // Previne login quando o número máximo de sessões for atingido
+//                )
+//                .userDetailsService(userDetailsServiceCustom)  // Configura o serviço customizado para carregar o usuário
+//                .httpBasic(Customizer.withDefaults())  // Permite autenticação via HTTP Basic
+//                .formLogin(form -> form.permitAll())  // Permite o login via formulário
+//                .logout(logout -> logout.permitAll());  // Permite o logout sem autenticação
 //
 //        return http.build();
 //    }
 //
 //    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();  // Define o encoder de senha como BCrypt
 //    }
-//
-//
-//
 //}

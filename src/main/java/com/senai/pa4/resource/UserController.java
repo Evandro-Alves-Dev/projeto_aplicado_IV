@@ -48,13 +48,13 @@ public class UserController {
 
     // INSERIDO NO PA4
 
-//    @GetMapping(value = "/{name}")
-////    public ResponseEntity<UserDTO> findByName(@PathVariable String name) {
-////        LOGGER.info("Iniciado a busca do usuario por ID");
-////        var response = userService.findByName(name);
-////        LOGGER.info("Finalizado a busca do usuario por ID");
-////        return ResponseEntity.ok().body(response);
-////    }
+    @GetMapping(value = "/{name}")
+    public ResponseEntity<UserDTO> findByName(@PathVariable String name) {
+        LOGGER.info("Iniciado a busca do usuario por ID");
+        var response = userService.findByUsername(name);
+       LOGGER.info("Finalizado a busca do usuario por ID");
+       return ResponseEntity.ok().body(response);
+    }
 
     // ATÉ AQUI
 

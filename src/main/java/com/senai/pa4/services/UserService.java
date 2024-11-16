@@ -38,12 +38,12 @@ public class UserService {
 
     // INSERIDO NO PA4
 
-//    @Transactional(readOnly = true)
-//    public UserDTO findByName(String name) {
-//        User user = userRepository.findByName(name)
-//                .orElseThrow(() -> new ResourceNotFoundException("Username " + name + " não encontrado"));
-//        return new UserDTO(user);
-//    }
+   @Transactional(readOnly = true)
+   public UserDTO findByUsername(String name) {
+        User user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Username " + name + " não encontrado"));
+        return new UserDTO(user);
+    }
 
     // ATÉ AQUI
 
@@ -78,7 +78,7 @@ public class UserService {
     private void copyDtoToEntity(UserDTO userDTO, User user) {
         user.setUsername(userDTO.getUsername());
         user.setPosition(userDTO.getPosition());
-        user.setRoleType(TypeEnum.parse(userDTO.getRoleType()));
+        user.setRoleType(userDTO.getRoleType());//user.setRoleType(TypeEnum.parse(userDTO.getRoleType()));
         user.setPassword((userDTO.getPassword())); //user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
     }
 

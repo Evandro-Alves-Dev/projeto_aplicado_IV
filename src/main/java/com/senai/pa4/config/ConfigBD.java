@@ -121,7 +121,7 @@ public class ConfigBD {
             ELSIF TG_OP = 'UPDATE' THEN 
                 INSERT INTO tb_audit (entity_name, action, details) 
                 VALUES ('Production', 'atualizado', CONCAT(
-                    'ID: ', NEW.idProduction, 
+                    'ID: ', NEW.id_production, 
                     ', Quantidade Planejada: ', NEW.plan_quantity, 
                     ', Quantidade Real: ', NEW.real_quantity, 
                     ', Unidade: ', NEW.unit, 
@@ -140,7 +140,7 @@ public class ConfigBD {
             ELSIF TG_OP = 'DELETE' THEN 
                 INSERT INTO tb_audit (entity_name, action, details) 
                 VALUES ('Production', 'excluído', CONCAT(
-                    'ID: ', OLD.idProduction, 
+                    'ID: ', OLD.id_production, 
                     ', Quantidade Planejada: ', OLD.plan_quantity, 
                     ', Quantidade Real: ', OLD.real_quantity, 
                     ', Unidade: ', OLD.unit, 

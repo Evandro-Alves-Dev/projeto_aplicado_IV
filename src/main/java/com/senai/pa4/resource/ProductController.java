@@ -20,9 +20,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/product", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/product", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})//, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class ProductController {
 
     private static final Logger LOGGER = Logger.getLogger(ProductController.class.getName());
@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductDTO> insert(ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO productDTO) {
         LOGGER.info("Iniciado a inserção de um novo produto");
         var response = productService.insert(productDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(response.getId()).toUri();

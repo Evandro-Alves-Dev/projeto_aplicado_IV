@@ -14,7 +14,11 @@
 //import org.springframework.security.web.SecurityFilterChain;
 //
 //@Configuration
+<<<<<<< HEAD
+////@EnableWebSecurity
+=======
 //@EnableWebSecurity
+>>>>>>> origin/feature-gilson
 //public class SecurityWeb {
 //
 //    @Autowired
